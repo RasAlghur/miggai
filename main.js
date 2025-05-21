@@ -1,6 +1,75 @@
-// main.js - MIGGAI website interactive effects
+// ==========================================
+// SEO AND NAVIGATION ENHANCEMENT
+// ==========================================
+function initSeoEnhancements() {
+    // Original title
+    const originalTitle = document.title;
+    
+    // Track visible sections to update title dynamically
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Get section name from id or data attribute
+                let sectionName = '';
+                if (entry.target.dataset.sectionName) {
+                    sectionName = entry.target.dataset.sectionName;
+                } else if (entry.target.id) {
+                    // Convert kebab-case to Title Case
+                    sectionName = entry.target.id
+                        .split('-')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ');
+                }
+                
+                // Update page title if we have a section name
+                if (sectionName) {
+                    document.title = `${sectionName} | MIGGAI`;
+                }
+            }
+        });
+    }, { threshold: 0.6 }); // Section must be mostly visible
+    
+    // Observe all main sections
+    document.querySelectorAll('section[id]').forEach(section => {
+        observer.observe(section);
+    });
+    
+    // Reset title when user is inactive or leaves
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            document.title = originalTitle;
+        }
+    });
+    
+    // Add schema.org structured data for better search results
+    addStructuredData();
+}
+
+// Add JSON-LD structured data for rich search results
+function addStructuredData() {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "MIGGAI",
+        "url": "https://www.miggai.com/",
+        "logo": "https://www.miggai.com/images/miggai-logo.png",
+        "description": "MIGGAI is where memes meet mission. Join the community powering the future of AI with purpose, power, and purrs.",
+        "sameAs": [
+            "https://twitter.com/MIGGAI_official",
+            "https://discord.gg/miggai",
+            "https://t.me/MIGGAI_official"
+        ]
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+}
+
+// Add this function call to your DOMContentLoaded event
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize all effects
+    // Existing initializations...
     generateStars();
     initFloatingElements();
     initParallaxEffect();
@@ -8,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
     initCyberScanners();
     initScrollAnimations();
     initButtonEffects();
+    
+    // Add new SEO enhancements
+    initSeoEnhancements();
 });
 
 // ==========================================
