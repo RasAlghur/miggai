@@ -74,6 +74,14 @@
          padding: 20px 0;
      }
 
+     a {
+         color: inherit;
+         /* or specify your desired color */
+         text-decoration: none;
+         /* removes underline */
+     }
+
+
      .logo {
          display: flex;
          align-items: center;
