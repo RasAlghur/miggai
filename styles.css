@@ -1236,3 +1236,48 @@
      ::-webkit-scrollbar-thumb:hover {
          background: #0cc;
      }
+
+     /* Add this CSS to fix the tokenomics section on mobile */
+
+     /* Update the existing tokenomics-container media query */
+     @media (max-width: 992px) {
+         .tokenomics-container {
+             display: flex;
+             flex-direction: column;
+             gap: 30px;
+         }
+
+         .tokenomics-chart,
+         .tokenomics-info {
+             width: 100%;
+             order: 0;
+             /* Reset any ordering */
+         }
+
+         /* Make token info appear first */
+         .tokenomics-info {
+             order: 1;
+         }
+
+         /* Chart appears second */
+         .tokenomics-chart {
+             order: 2;
+         }
+     }
+
+     /* For smaller mobile screens */
+     @media (max-width: 768px) {
+         .tokenomics-container {
+             display: flex;
+             flex-direction: column;
+             gap: 20px;
+         }
+
+         .tokenomics-info {
+             order: 1;
+         }
+
+         .tokenomics-chart {
+             order: 2;
+         }
+     }
